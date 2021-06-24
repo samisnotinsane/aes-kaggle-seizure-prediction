@@ -61,4 +61,5 @@ def make_input_target():
         arr_targets.append(label_segment(preictal_inputs, 1))        
     X = np.concatenate(arr_inputs).ravel()
     y = np.concatenate(arr_targets).ravel()
+    y = y.astype(int)
     return X, y
