@@ -1,9 +1,7 @@
 import os
 import re
 import numpy as np
-from scipy.io import loadmat
 from scipy import signal
-from tqdm import tqdm
 
 def is_interictal(name):
     return 'interictal' in name
@@ -12,12 +10,12 @@ def is_preictal(name):
     return 'preictal' in name
 
 def get_preictal_files(directory_path):
-    preictal_filter = filter(is_preictal, os.listdir(dir_path))
+    preictal_filter = filter(is_preictal, os.listdir(directory_path))
     preictals = [preictal for preictal in preictal_filter]
     return preictals
 
 def get_interictal_files(directory_path):
-    interictal_filter = filter(is_interictal, os.listdir(dir_path))
+    interictal_filter = filter(is_interictal, os.listdir(directory_path))
     interictals = [interictal for interictal in interictal_filter]
     return interictals
 
@@ -40,13 +38,16 @@ def stft(mat, window_size):
     sigbuf = get_sig(mat)
     fs = np.round(get_fs(mat))
     n_channels = sigbuf.shape[0]
-    print('Raw EEG matrix shape:', sigbuf.shape)
+    # print('Raw EEG matrix shape:', sigbuf.shape)
     window_idx = np.rint(window_size/(1/fs)).astype(int)
-    freq_len = (window_idx/2) + 1
+    freq_len = ((window_idx/2) + 1).astype(int)
+    N = sigbuf.shape[1]
+    t = np.arange(0, N) / fs
     time_len = np.max(t).astype(int)
-    Zxxs = np.zeros((n_channels, freq_len, time_len), dtype='complex')
-    print('STFT matrix shape', Zxxs.shape)
-    for i in tqdm(range(1, sigbuf.shape[0])):
+    # print(n_channels, freq_len, np.max(t))
+    Zxxs = np.zeros((n_channels, freq_len, time_len+2), dtype='complex')
+    # print('STFT matrix shape', Zxxs.shape)
+    for i in range(1, sigbuf.shape[0]):
         sig = sigbuf[i,:]
         timewin = 2 # sliding window duration in seconds
         timewinidx = np.rint(timewin/(1/fs)).astype(int)
