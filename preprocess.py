@@ -14,10 +14,15 @@ def get_preictal_files(directory_path):
     preictals = [preictal for preictal in preictal_filter]
     return preictals
 
-def get_interictal_files(directory_path):
+def count_interictal_files(directory_path):
     interictal_filter = filter(is_interictal, os.listdir(directory_path))
     interictals = [interictal for interictal in interictal_filter]
-    return interictals
+    return len(interictals)
+
+def get_interictal_files(directory_path, n_select=5):
+    interictal_filter = filter(is_interictal, os.listdir(directory_path))
+    interictals = [interictal for interictal in interictal_filter]
+    return interictals[:n_select]
 
 def get_sig(mat):
     "Returns (channel x times) matrix representing EEG signal in microvolt."
