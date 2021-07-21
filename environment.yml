@@ -1,0 +1,15 @@
+name: kaggle-seizure
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - ipython=7.19.0
+  - notebook=6.1.4
+  - matplotlib=3.3.1
+  - pip=20.3.3
+  - python=3.8.5
+  - scikit-learn=0.24.2
+  - tqdm=4.59.0
+  - imbalanced-learn=0.8.0
+  - kaggle
+
