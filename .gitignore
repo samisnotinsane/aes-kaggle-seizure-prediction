@@ -1,6 +1,7 @@
 # Data
 data/
 data_copy/
+.DS_Store
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
